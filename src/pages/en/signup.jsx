@@ -17,12 +17,14 @@ const Signup = () => {
   console.log("Error 2::::", error);
 
   return (
-    <section className="h-screen flex justify-around">
-      <div className="basis-1/2 z-10 flex flex-col gap-8">
+    <section className="h-screen overflow-x-hidden lg:flex">
+      <div className="basis-1/2 z-10 flex flex-col gap-16">
         <NavBar lang="en" isSignup={true}></NavBar>
         {/* Main Code Form and so on */}
-        <main className="mr-auto ml-auto">
-          <h1 className="text-5xl font-bold text-center mb-7">Sign up</h1>
+        <main className="mr-auto ml-auto w-3/4 md:w-1/2">
+          <h1 className="text-4xl font-bold text-center mb-7 md:text-5xl">
+            Sign up
+          </h1>
           <p className="text-center mb-10">
             Sign up today and stay connected with your friends <br /> through
             our chat platform!
@@ -63,7 +65,7 @@ const Signup = () => {
           {step === 2 ? <SetupPhase></SetupPhase> : null}
         </main>
       </div>
-      <div className="flex relative basis-1/2">
+      <div className="basis-1/2 relative hidden lg:flex">
         <div
           className="bg-cover bg-[-16rem] bg-no-repeat absolute w-full h-full z-10"
           style={{
@@ -79,12 +81,14 @@ const Signup = () => {
               : "from-pink-500 to-purple-500"
           } opacity-30`}
         ></div>
-        <Image className="object-cover" src={rightImg} alt="Woman Texting" />
-        {/* <Image
-          className="absolute -left-20 top-0 h-full"
-          src={theme === "light" ? waveDark : waveLight}
-          alt="Wave"
-        /> */}
+
+        <Image
+          style={{ objectFit: "cover" }}
+          src={rightImg}
+          alt="Woman Texting"
+          // width={500}
+          // height={500}
+        />
       </div>
     </section>
   );
