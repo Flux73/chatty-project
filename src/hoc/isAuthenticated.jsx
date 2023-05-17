@@ -1,3 +1,4 @@
+import socket from "@/util/socket";
 import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState } from "react";
 
@@ -8,6 +9,8 @@ const isAuthenticated = (Component) => {
 
     useEffect(() => {
       if (Component.requireAuth) {
+        console.log("Auth read");
+
         if (!localStorage.getItem("logged_in")) {
           router.push("/en/signup");
           return;

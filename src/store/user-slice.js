@@ -1,7 +1,9 @@
+import socket from "@/util/socket";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {
+    id: null,
     picture: null,
     username: null,
     email: null,
@@ -18,6 +20,7 @@ const userSlice = createSlice({
     createUser: (state, action) => {
       state.user.username = action.payload.user.username;
       state.user.email = action.payload.user.email;
+      state.user.id = action.payload.user._id;
     },
     updateUserInfo: (state, action) => {
       state.user.picture = action.payload.user.picture;
@@ -34,9 +37,10 @@ const userSlice = createSlice({
       state.user.picture = action.payload.user.picture;
       state.user.gender = action.payload.user.gender;
       state.user.birthDate = action.payload.user.birthDate;
+      state.user.id = action.payload.user._id;
     },
 
-    logoutUser: () => {
+    logoutUser: (state, action) => {
       localStorage.removeItem("logged_in");
     },
 

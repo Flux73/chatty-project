@@ -5,6 +5,7 @@ import {
   setServerError,
   updateUserInfo,
 } from "./user-slice";
+import socket from "@/util/socket";
 
 export const createUserAsync = (username, email, password, confirmPassword) => {
   return async (dispatch, getState) => {
@@ -64,6 +65,8 @@ export const updateUserAsync = (img, gender, birthDate) => {
         dispatch(updateUserInfo({ user: user.data.user }));
         dispatch(loginUser());
         dispatch(setServerError({ error: null }));
+        socket.emit("user-connected", { userId: user.data.data.user._id });
+
         // return Promise.resolve()
       } catch (err) {
         dispatch(setServerError({ error: err.response.data.message }));
@@ -91,10 +94,11 @@ export const loginAsync = (email, password) => {
         );
         console.log("WORKED");
         console.log(user);
+        console.log("Socket", user.data.data.user);
 
-        dispatch(loginUser({ user: user.data.user }));
+        dispatch(loginUser({ user: user.data.data.user }));
         dispatch(setServerError({ error: null }));
-        // return Promise.resolve()
+        socket.emit("user-connected", { userId: user.data.data.user._id });
       } catch (err) {
         dispatch(setServerError({ error: err.response.data.message }));
         return Promise.reject(err);

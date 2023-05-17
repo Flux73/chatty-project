@@ -4,23 +4,13 @@ import logoDark from "../../public/imgs/Asset 3.svg";
 import logoLight from "../../public/imgs/Asset 1.svg";
 import arabicPic from "../../public/imgs/arabic_pic.png";
 import englishPic from "../../public/imgs/english_pic.png";
-import {
-  RiArrowLeftLine,
-  RiArrowLeftSLine,
-  RiMenu2Line,
-  RiMoonLine,
-  RiSunLine,
-} from "react-icons/ri";
+import { RiMenu2Line, RiMoonLine, RiSunLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme as setThemeState } from "@/store/theme-slice";
-import { useState } from "react";
 
 const NavBar = ({ lang, isSignup }) => {
   const { theme } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-  const [isHovered, setIsHovered] = useState(false);
-
-  console.log(isHovered);
 
   return (
     <nav className="px-8 py-8 lg:px-16">

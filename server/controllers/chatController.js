@@ -18,19 +18,36 @@ const handleEvents = (socket, io) => {
   /////////////////////////////
   console.log("con", socket.id);
   socket.on("user-connected", async (data) => {
-    const user = await User.findById(data.userId);
+    const user = await User.findById(data.userId).populate({
+      path: "friends",
+      select: "-friends",
+    });
     user.isConnected = true;
     user.socketId = socket.id;
     user.save();
-    console.log(user.username);
-    console.log("MINE", socket.id);
+    // console.log(user.username);
+    // console.log("MINE", socket.id);
+    user.friends.forEach((friend, i) => {
+      console.log("HAAAAADI", friend.socketId);
+      friend.socketId && io.to(friend.socketId).emit("friend-connected");
+    });
   });
 
   socket.on("user-disconnected", async (data) => {
-    const user = await User.findById(data.userId);
+    const user = await User.findById(data.userId).populate({
+      path: "friends",
+      select: "-friends",
+    });
+    console.log("user disconnected", user);
     user.isConnected = false;
     user.socketId = undefined;
     user.save();
+    // console.log(user.username);
+    // console.log("MINE", socket.id);
+    user.friends.forEach((friend, i) => {
+      console.log("HAAAAADI", friend.socketId);
+      friend.socketId && io.to(friend.socketId).emit("friend-disconnected");
+    });
   });
 
   socket.on("notification", async (data) => {
@@ -68,9 +85,24 @@ const handleEvents = (socket, io) => {
 
   // socket.broadcast.emit("hi");
 
-  socket.on("disconnect", () => {
-    // removeUser(socket.id);
-    console.log("user disconnected");
+  socket.on("disconnect", async (data) => {
+    console.log("DISCO", socket.id);
+    const user = await User.findOne({ socketId: socket.id }).populate({
+      path: "friends",
+      select: "-friends",
+    });
+
+    if (user) {
+      user.isConnected = false;
+      user.socketId = undefined;
+      user.save();
+      console.log(user);
+
+      user.friends.forEach((friend, i) => {
+        console.log("HAAAAADI", friend.socketId);
+        friend.socketId && io.to(friend.socketId).emit("friend-disconnected");
+      });
+    }
   });
 };
 // io.on("connection", );

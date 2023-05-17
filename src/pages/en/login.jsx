@@ -25,6 +25,7 @@ const Login = ({ lang }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.user);
 
   const loginSubmitHandler = async (e) => {
     try {
@@ -40,7 +41,6 @@ const Login = ({ lang }) => {
       }
 
       await dispatch(loginAsync(email, password));
-
       setLoading(false);
       router.push("/en/home");
     } catch (err) {

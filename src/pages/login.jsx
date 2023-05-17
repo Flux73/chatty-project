@@ -27,7 +27,7 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      socket.emit("user-connected", { userId: req.data.data.user._id });
+      // socket.emit("user-connected", { userId: req.data.data.user._id });
       router.push("/me");
     } catch (err) {
       console.log(err);

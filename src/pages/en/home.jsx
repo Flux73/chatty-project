@@ -1,35 +1,44 @@
+import Friend from "@/components/Friend";
+import HomeNavBar from "@/components/HomeNavBar";
+import MobileNav from "@/components/MobileNav";
 import isAuthenticated from "@/hoc/isAuthenticated";
-import { logoutUser } from "@/store/user-slice";
+import useFetchMe from "@/hooks/useFetchMe";
 import axios from "axios";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const home = () => {
-  const router = useRouter();
-  const { user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  console.log(user);
+  const [friends, setFriends] = useState(null);
+  useFetchMe();
 
-  const logoutHandler = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000/api/v1/users/logout", {
+  useEffect(() => {
+    (async () => {
+      const req = await axios.get("http://localhost:4000/api/v1/friends/", {
         withCredentials: true,
       });
-      dispatch(logoutUser());
-      router.push("/en/signup");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+      setFriends(req.data.data.friends);
+    })();
+  }, []);
 
   return (
-    <div>
-      <ul>
-        <li>home</li>
-      </ul>
-      <button className="btn btn-accent" onClick={logoutHandler}>
-        Logout
-      </button>
+    <div className="h-screen">
+      <HomeNavBar></HomeNavBar>
+      <main>
+        <ul>
+          {friends ? (
+            friends.map((friend) => (
+              <Friend
+                username={friend.username}
+                id={friend._id}
+                isConnected={friend.isConnected}
+              />
+            ))
+          ) : (
+            <li>Loading...</li>
+          )}
+        </ul>
+      </main>
+      <MobileNav active="chats"></MobileNav>
     </div>
   );
 };

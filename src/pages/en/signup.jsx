@@ -86,8 +86,6 @@ const Signup = () => {
           style={{ objectFit: "cover" }}
           src={rightImg}
           alt="Woman Texting"
-          // width={500}
-          // height={500}
         />
       </div>
     </section>
