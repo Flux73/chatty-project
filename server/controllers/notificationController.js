@@ -42,5 +42,35 @@ const sendFriendRequest = async (req, res, next) => {
   }
 };
 
+const getIsSentFriendRequest = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { friend } = req.params;
+
+    const notification = await Notification.findOne({
+      $and: [
+        { $or: [{ sender: user._id }, { sender: friend }] },
+
+        { $or: [{ receiver: user._id }, { receiver: friend }] },
+      ],
+    });
+
+    let isUserSent;
+    if (notification) isUserSent = notification.receiver === friend;
+
+    res.status(200).json({
+      status: "success",
+      data: isUserSent,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteNotification = async (req, res, next) => {};
-export default { sendFriendRequest, getNotifications, deleteNotification };
+export default {
+  sendFriendRequest,
+  getNotifications,
+  deleteNotification,
+  getIsSentFriendRequest,
+};

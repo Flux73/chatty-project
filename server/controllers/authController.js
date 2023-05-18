@@ -44,9 +44,9 @@ export const login = async (req, res, next) => {
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
 
-    console.log(token);
     res.cookie("jwt", token, {
-      // expires: new Date(Date.now() + 900000),
+      // expires: new Date(Date.now() + 30000),
+      maxAge: req.body.rememberMe ? 2592000000 : null,
       httpOnly: true,
       secure: true,
     });
@@ -68,7 +68,7 @@ export const logout = async (req, res, next) => {
   try {
     console.log("WORKED");
     res.cookie("jwt", "loggingOut", {
-      expires: new Date(Date.now() + 1000 * 30),
+      // expires: new Date(Date.now() + 1000 * 30),
       httpOnly: true,
     });
     res.status(200).json({

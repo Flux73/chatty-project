@@ -59,4 +59,19 @@ const searchUsers = async (req, res, next) => {
   }
 };
 
-export default { me, searchUsers, updateMe };
+const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.user);
+
+    if (!user) next(new Error("No Users were found with this username"));
+
+    res.status(200).json({
+      status: "success",
+      user,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { me, searchUsers, updateMe, getUser };

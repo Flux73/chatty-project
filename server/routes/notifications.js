@@ -11,6 +11,12 @@ router.post(
 );
 
 router.get(
+  "/isSendFriendRequest/:friend",
+  authController.protect,
+  notificationController.getIsSentFriendRequest
+);
+
+router.get(
   "/",
   authController.protect,
   notificationController.getNotifications

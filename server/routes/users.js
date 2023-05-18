@@ -7,7 +7,8 @@ const router = express.Router();
 router.post("/signup", authController.signup);
 
 router.post("/login", authController.login);
-router.get("/logout", authController.protect, authController.logout);
+router.get("/logout", authController.logout);
+// router.get("/logout", authController.protect, authController.logout);
 router.post("/forgetPassword", authController.forgetPassword);
 
 router.patch("/resetPassword/:token", authController.resetPassword);
@@ -22,6 +23,6 @@ router
   .get(authController.protect, userController.me)
   .patch(authController.protect, userController.updateMe);
 
-router.get("/:user", authController.protect, userController.searchUsers);
+router.get("/:user", authController.protect, userController.getUser);
 
 export default router;
