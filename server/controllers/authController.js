@@ -23,7 +23,6 @@ export const signup = async (req, res, next) => {
     });
     res.status(201).json({
       status: "success",
-      // token,
       user,
     });
   } catch (err) {

@@ -5,6 +5,8 @@ const addFriend = async (req, res, next) => {
     const user = req.user;
     const { friend } = req.params;
 
+    console.log(friend, user, "LLLL");
+
     await User.findOneAndUpdate(
       { _id: user.id },
       { $push: { friends: friend } },

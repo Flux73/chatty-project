@@ -1,19 +1,5 @@
 import User from "../models/userModel.js";
 
-const users = [];
-
-const addNewUser = (username, socketId) => {
-  users.push({ username, socketId });
-  console.log(users);
-};
-
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
-
-const getUser = (username) => {
-  return users.find((user) => user.username === username);
-};
 const handleEvents = (socket, io) => {
   /////////////////////////////
   console.log("con", socket.id);
@@ -29,7 +15,8 @@ const handleEvents = (socket, io) => {
     // console.log("MINE", socket.id);
     user.friends.forEach((friend, i) => {
       console.log("HAAAAADI", friend.socketId);
-      friend.socketId && io.to(friend.socketId).emit("friend-connected");
+      friend.socketId &&
+        io.to(friend.socketId).emit("friend-connected", user._id);
     });
   });
 
@@ -46,19 +33,69 @@ const handleEvents = (socket, io) => {
     // console.log("MINE", socket.id);
     user.friends.forEach((friend, i) => {
       console.log("HAAAAADI", friend.socketId);
-      friend.socketId && io.to(friend.socketId).emit("friend-disconnected");
+      friend.socketId &&
+        io.to(friend.socketId).emit("friend-disconnected", user._id);
     });
   });
 
-  socket.on("notification", async (data) => {
-    // console.log(data);
+  socket.on("friend-notification", async (data) => {
+    console.log("Data", data);
     const receiver = await User.findById(data.receiver);
+    const sender = await User.findById(data.sender);
 
-    console.log("Receiver", receiver.socketId);
-    io.to(receiver.socketId).emit(
-      "send-notification",
-      "Salah Send you a friend request"
-    );
+    console.log("Receiver", receiver);
+    receiver.socketId &&
+      io.to(receiver.socketId).emit("send-notification", {
+        id: data._id,
+        sender: { username: sender.username, id: sender._id },
+        sentDate: data.sentDate,
+        type: data.type,
+        isSeen: data.isSeen,
+      });
+  });
+
+  socket.on("response-friend", async (data) => {
+    const user = await User.findById(data.id);
+    console.log("SENT");
+    const sender = await User.findById(data.sender);
+
+    console.log(sender);
+    if (user.socketId) {
+      io.to(user.socketId).emit("send-notification", {
+        id: data._id,
+        type: data.type,
+        sender: { username: sender.username, id: sender._id },
+        sentDate: data.sentDate,
+        isSeen: data.isSeen,
+      });
+    }
+  });
+
+  socket.on("send-message", async (data) => {
+    const user = await User.findById(data.receiver);
+
+    console.log(user);
+
+    if (user.socketId) {
+      io.to(user.socketId).emit("get-message", data);
+    }
+  });
+
+  socket.on("send-message-notification", async (data) => {
+    const user = await User.findById(data);
+
+    if (user.socketId) {
+      io.to(user.socketId).emit("get-message-notification", true);
+    }
+  });
+
+  socket.on("message-seen", async (data) => {
+    console.log(data);
+    const user = await User.findById(data);
+
+    if (user.socketId) {
+      io.to(user.socketId).emit("get-message-seen", true);
+    }
   });
 
   // console.log("New WebSocket connection...", socket.id);
@@ -100,7 +137,8 @@ const handleEvents = (socket, io) => {
 
       user.friends.forEach((friend, i) => {
         console.log("HAAAAADI", friend.socketId);
-        friend.socketId && io.to(friend.socketId).emit("friend-disconnected");
+        friend.socketId &&
+          io.to(friend.socketId).emit("friend-disconnected", user._id);
       });
     }
   });

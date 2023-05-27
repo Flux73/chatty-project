@@ -11,6 +11,7 @@ const initialState = {
     birthDate: null,
   },
   error: null,
+  routerPage: null,
 };
 
 const userSlice = createSlice({
@@ -47,6 +48,10 @@ const userSlice = createSlice({
     setServerError: (state, action) => {
       state.error = action.payload.error;
     },
+
+    setRouterPage: (state, action) => {
+      state.routerPage = action.payload;
+    },
   },
 });
 
@@ -56,5 +61,6 @@ export const {
   setServerError,
   loginUser,
   logoutUser,
+  setRouterPage,
 } = userSlice.actions;
 export default userSlice.reducer;

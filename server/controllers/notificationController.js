@@ -4,13 +4,27 @@ import User from "../models/userModel.js";
 const getNotifications = async (req, res, next) => {
   try {
     const user = req.user;
-    const notifications = await Notification.find({ receiver: user.id });
+    let notifications = await Notification.find({
+      receiver: user.id,
+    }).populate("sender", "username");
 
     res.status(200).json({
       status: "success",
       data: {
         notifications,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const updateUnseenNotifications = async (req, res, next) => {
+  try {
+    await Notification.updateMany({ isSeen: false }, { isSeen: true });
+
+    res.status(200).json({
+      status: "success",
     });
   } catch (err) {
     next(err);
@@ -25,7 +39,7 @@ const sendFriendRequest = async (req, res, next) => {
     console.log(user._id);
 
     const notification = await Notification.create({
-      type: "Friend",
+      type: req?.body?.type || "Friend",
       sender: user._id,
       receiver: friend,
     });
@@ -67,10 +81,22 @@ const getIsSentFriendRequest = async (req, res, next) => {
   }
 };
 
-const deleteNotification = async (req, res, next) => {};
+const deleteNotification = async (req, res, next) => {
+  try {
+    await Notification.findByIdAndDelete(req.params.notification);
+
+    res.status(204).json({
+      status: "success",
+      msg: "Notification has been deleted",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 export default {
   sendFriendRequest,
   getNotifications,
   deleteNotification,
   getIsSentFriendRequest,
+  updateUnseenNotifications,
 };

@@ -22,4 +22,14 @@ router.get(
   notificationController.getNotifications
 );
 
+router.patch(
+  "/updateUnseenNotifications",
+  authController.protect,
+  notificationController.updateUnseenNotifications
+);
+
+router
+  .route("/:notification")
+  .delete(authController.protect, notificationController.deleteNotification);
+
 export default router;

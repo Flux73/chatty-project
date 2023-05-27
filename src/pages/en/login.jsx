@@ -17,6 +17,7 @@ const Login = ({ lang }) => {
   const { error } = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({
     email: false,
     password: false,
@@ -40,7 +41,7 @@ const Login = ({ lang }) => {
         return;
       }
 
-      await dispatch(loginAsync(email, password));
+      await dispatch(loginAsync(email, password, rememberMe));
       setLoading(false);
       router.push("/en/home");
     } catch (err) {
@@ -134,7 +135,18 @@ const Login = ({ lang }) => {
                 </label>
               ) : null}
               <label className="label">
-                <span className="label-text"></span>
+                <span className="label-text">
+                  <div className="form-control">
+                    <label className="label cursor-pointer gap-2">
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-secondary"
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                      />
+                      <span className="label-text">Remember me</span>
+                    </label>
+                  </div>
+                </span>
                 <span className="label-text link-hover link link-secondary">
                   <Link href="/en/forgotPassword">Forgot password?</Link>
                 </span>

@@ -4,13 +4,10 @@ const notificationSchema = new mongoose.Schema({
   type: {
     type: String,
     required: [true, "Notification must have a type"],
-    enum: ["Friend", "Chat"],
+    // enum: ["Friend", "Chat"],
   },
 
-  sender: {
-    type: String,
-    required: [true, "Notification must have the id of the sender"],
-  },
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 
   receiver: {
     type: String,
@@ -20,6 +17,11 @@ const notificationSchema = new mongoose.Schema({
   sentDate: {
     type: Date,
     default: Date.now(),
+  },
+
+  isSeen: {
+    type: Boolean,
+    default: false,
   },
 });
 

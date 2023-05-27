@@ -78,7 +78,7 @@ export const updateUserAsync = (img, gender, birthDate) => {
   };
 };
 
-export const loginAsync = (email, password) => {
+export const loginAsync = (email, password, rememberMe) => {
   return async (dispatch, getState) => {
     const fetchData = async () => {
       try {
@@ -87,6 +87,7 @@ export const loginAsync = (email, password) => {
           {
             email,
             password,
+            rememberMe,
           },
           {
             withCredentials: true,

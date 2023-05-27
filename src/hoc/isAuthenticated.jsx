@@ -12,7 +12,7 @@ const isAuthenticated = (Component) => {
         console.log("Auth read");
 
         if (!localStorage.getItem("logged_in")) {
-          router.push("/en/signup");
+          router.push("/en/login");
           return;
         }
       } else {

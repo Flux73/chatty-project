@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 const Friend = ({ username, id, isConnected }) => {
   const [eventConnected, setEventConnected] = useState(false);
   const [eventDisconnected, setEventDisconnected] = useState(false);
-
+  console.log(id, eventConnected);
   useEffect(() => {
-    socket.on("friend-connected", () => {
-      console.log("Friend is online");
+    socket.on("friend-connected", (msg) => {
+      if (msg !== id) return;
       setEventConnected(true);
       setEventDisconnected(false);
     });
-    socket.on("friend-disconnected", () => {
-      console.log("Friend is offline");
+    socket.on("friend-disconnected", (msg) => {
+      if (msg !== id) return;
       setEventConnected(false);
       setEventDisconnected(true);
     });

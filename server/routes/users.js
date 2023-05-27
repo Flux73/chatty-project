@@ -24,5 +24,10 @@ router
   .patch(authController.protect, userController.updateMe);
 
 router.get("/:user", authController.protect, userController.getUser);
+router.get(
+  "/search/:search",
+  authController.protect,
+  userController.searchUsers
+);
 
 export default router;

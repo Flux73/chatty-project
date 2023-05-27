@@ -8,10 +8,7 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  console.log(router);
-
   useEffect(() => {
-    console.log("READ");
     if (localStorage.getItem("theme")) {
       store.dispatch(setTheme({ theme: localStorage.getItem("theme") }));
       return;

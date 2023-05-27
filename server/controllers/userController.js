@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/userModel.js";
+import mongoose from "mongoose";
 
 const me = (req, res, next) => {
   const user = req.user;
@@ -39,7 +40,7 @@ const updateMe = async (req, res, next) => {
 const searchUsers = async (req, res, next) => {
   try {
     const user = req.user;
-    const searchQuery = req.params.user;
+    const searchQuery = req.params.search;
 
     const users = await User.find({
       username: {
