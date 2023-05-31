@@ -1,12 +1,14 @@
 import React from "react";
 import { RiCheckDoubleLine, RiCheckLine } from "react-icons/ri";
+import formatDate from "@/util/formatDate";
 
 const ChatMessageUser = ({ id, message, sentDate, isDeleted, isSeen }) => {
   console.log(isSeen, "Iseen");
+  // console.log(formatTimeAgo(sentDate));
   return (
     <div className="chat chat-end">
       <div className="chat-header">
-        sent <time className="text-xs opacity-50">{sentDate}</time>
+        sent <time className="text-xs opacity-50">{formatDate(sentDate)}</time>
       </div>
       <div className="chat-bubble chat-bubble-primary">{message}</div>
       {/* <div className="chat-footer opacity-50">Seen</div> */}

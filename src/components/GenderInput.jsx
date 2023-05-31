@@ -1,4 +1,4 @@
-const GenderInput = ({ title, val, setGender, setError }) => {
+const GenderInput = ({ title, val, setGender, setError, isChecked }) => {
   return (
     <label className="label gap-5 cursor-pointer">
       <span className="label-text">{title}</span>
@@ -11,6 +11,7 @@ const GenderInput = ({ title, val, setGender, setError }) => {
           setError((prev) => ({ ...prev, gender: false }));
         }}
         className="radio checked:bg-primary"
+        checked={isChecked}
       />
     </label>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { createPortal } from "react-dom";
@@ -15,7 +17,7 @@ const MobileNav = ({ disable }) => {
   const { unseenMessages: unSeens } = useSelector((state) => state.chat);
   const router = useRouter();
   return (
-    <div className="btm-nav">
+    <div className="btm-nav static">
       <Link
         href={"/en/home"}
         className={`hover:bg-base-300 indicator  ${

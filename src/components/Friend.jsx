@@ -1,9 +1,10 @@
+import formatDate from "@/util/formatDate";
 import socket from "@/util/socket";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const Friend = ({ username, id, isConnected }) => {
+const Friend = ({ username, id, isConnected, disconnectedAt }) => {
   const [eventConnected, setEventConnected] = useState(false);
   const [eventDisconnected, setEventDisconnected] = useState(false);
   console.log(id, eventConnected);
@@ -46,7 +47,13 @@ const Friend = ({ username, id, isConnected }) => {
         </div>
         <div className="flex flex-col justify-around">
           <h2 className="font-bold text-lg">{username}</h2>
-          <p className="opacity-75">Hey , How are you doing!</p>
+          <p className="opacity-75">
+            {eventDisconnected
+              ? `Active ${formatDate(disconnectedAt)}`
+              : eventConnected || isConnected
+              ? "Active now"
+              : `Active ${formatDate(disconnectedAt)}`}
+          </p>
         </div>
       </Link>
     </li>

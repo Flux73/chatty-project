@@ -3,6 +3,7 @@ import ChatMessageUser from "@/components/chat/ChatMessageUser";
 import useFetchMe from "@/hooks/useFetchMe";
 import { deleteUnseenMessages } from "@/store/chat-slice";
 import { setRouterPage } from "@/store/user-slice";
+import formatDate from "@/util/formatDate";
 import socket from "@/util/socket";
 import axios from "axios";
 import Image from "next/image";
@@ -18,7 +19,7 @@ const Page = () => {
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useSelector((state) => state.user);
-  const { unseenMessages } = useSelector((state) => state.chat);
+  // const { unseenMessages } = useSelector((state) => state.chat);
   const [friend, setFriend] = useState(null);
   const [eventConnected, setEventConnected] = useState(false);
   const [eventDisconnected, setEventDisconnected] = useState(false);
@@ -176,10 +177,10 @@ const Page = () => {
               <span className="text-xl font-semibold">{friend.username}</span>
               <span className="opacity-50">
                 {eventDisconnected
-                  ? "Active 1h ago"
+                  ? `Active ${formatDate(friend.disconnectedAt)}`
                   : eventConnected || friend.isConnected
-                  ? "Active"
-                  : "Active 1h ago"}
+                  ? "Active now"
+                  : `Active ${formatDate(friend.disconnectedAt)}`}
               </span>
             </div>
           </div>

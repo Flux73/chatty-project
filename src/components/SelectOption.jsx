@@ -3,6 +3,7 @@ const SelectOption = ({
   options,
   setValue,
   val,
+  value,
   error,
   setError,
 }) => {
@@ -23,8 +24,10 @@ const SelectOption = ({
       <option disabled selected>
         {selectTitle}
       </option>
-      {options.map((el) => (
-        <option value={el}>{el}</option>
+      {options.map((el, i) => (
+        <option value={el} selected={value && value === el}>
+          {el}
+        </option>
       ))}
     </select>
   );

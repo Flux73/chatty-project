@@ -1,3 +1,4 @@
+import formatDate from "@/util/formatDate";
 import React from "react";
 
 const ChatMessageFriend = ({ id, message, sentDate, isDeleted }) => {
@@ -9,7 +10,7 @@ const ChatMessageFriend = ({ id, message, sentDate, isDeleted }) => {
         </div>
       </div>
       <div className="chat-header">
-        sent <time className="text-xs opacity-50">{sentDate}</time>
+        sent <time className="text-xs opacity-50">{formatDate(sentDate)}</time>
       </div>
       <div className="chat-bubble">{message}</div>
     </div>

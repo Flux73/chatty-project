@@ -45,9 +45,9 @@ const home = () => {
   }, []);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <HomeNavBar></HomeNavBar>
-      <main>
+      <main className="grow">
         <ul>
           {friends ? (
             friends.map((friend) => (
@@ -55,6 +55,7 @@ const home = () => {
                 username={friend.username}
                 id={friend._id}
                 isConnected={friend.isConnected}
+                disconnectedAt={friend.disconnectedAt}
               />
             ))
           ) : (

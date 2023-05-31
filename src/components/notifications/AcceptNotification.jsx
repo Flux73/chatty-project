@@ -1,4 +1,5 @@
 import { deleteNotification } from "@/store/notification-slice";
+import formatDate from "@/util/formatDate";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
@@ -35,8 +36,8 @@ const AcceptNotification = ({ notificationId, sender, sentDate }) => {
       <div className="flex flex-col mr-auto">
         <span className="font-bold">{sender.username}</span>
         <p className="">
-          Accepted your friend request
-          <span className="opacity-70">{sentDate} ago</span>
+          Accepted your friend request{" "}
+          <span className="opacity-70">{formatDate(sentDate)}</span>
         </p>
       </div>
       <div>

@@ -2,6 +2,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { RiSearchLine } from "react-icons/ri";
 
 const SearchFriends = () => {
   const [query, setQuery] = useState("");
@@ -55,7 +56,9 @@ const SearchFriends = () => {
                 className="input input-secondary grow"
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <span>S</span>
+              <span>
+                <RiSearchLine size={26} />
+              </span>
             </label>
           </div>
           {query ? (

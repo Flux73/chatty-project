@@ -106,9 +106,9 @@ const Page = () => {
   console.log("Pending", isFriendPending);
 
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <HomeNavBar></HomeNavBar>
-      <main>
+      <main className="grow">
         {loading ? (
           <div>Loading...</div>
         ) : (
@@ -191,16 +191,7 @@ const Page = () => {
             <div>
               <h2 className="text-2xl font-bold mb-5">Bio 🔥</h2>
               <p className="text-neutral-content font-medium text-lg text-opacity-70 leading-relaxed">
-                Hey there! I'm Samantha Hayes, a travel-loving, game-playing
-                developer. I'm all about exploring the world and immersing
-                myself in exciting gaming adventures. As a software developer, I
-                enjoy the challenge of creating innovative solutions through
-                coding. When I'm not working, you'll find me planning my next
-                travel escapade or diving into captivating virtual worlds. I
-                believe in the power of technology to enhance our lives, and I
-                embrace the joy of both travel and gaming. Let's embark on
-                amazing journeys together, whether it's through lines of code or
-                across breathtaking landscapes!
+                {user.bio}
               </p>
             </div>
           </div>

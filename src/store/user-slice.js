@@ -38,6 +38,7 @@ const userSlice = createSlice({
       state.user.picture = action.payload.user.picture;
       state.user.gender = action.payload.user.gender;
       state.user.birthDate = action.payload.user.birthDate;
+      state.user.bio = action.payload.user.bio;
       state.user.id = action.payload.user._id;
     },
 
