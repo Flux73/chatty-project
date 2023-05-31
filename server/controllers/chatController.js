@@ -10,6 +10,8 @@ const handleEvents = (socket, io) => {
     });
     user.isConnected = true;
     user.socketId = socket.id;
+    user.disconnectedAt = undefined;
+
     user.save();
     // console.log(user.username);
     // console.log("MINE", socket.id);
@@ -28,6 +30,7 @@ const handleEvents = (socket, io) => {
     console.log("user disconnected", user);
     user.isConnected = false;
     user.socketId = undefined;
+    user.disconnectedAt = Date.now();
     user.save();
     // console.log(user.username);
     // console.log("MINE", socket.id);
@@ -132,6 +135,8 @@ const handleEvents = (socket, io) => {
     if (user) {
       user.isConnected = false;
       user.socketId = undefined;
+      user.disconnectedAt = Date.now();
+
       user.save();
       console.log(user);
 

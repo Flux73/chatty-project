@@ -16,7 +16,6 @@ const notificationSchema = new mongoose.Schema({
 
   sentDate: {
     type: Date,
-    default: Date.now(),
   },
 
   isSeen: {

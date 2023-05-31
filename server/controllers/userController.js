@@ -15,15 +15,26 @@ const updateMe = async (req, res, next) => {
   try {
     const user = req.user;
 
-    console.log(req.body.image);
-    // user.image = req.body.image || null;
-    user.birthDate = new Date(
-      `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
-    );
-    user.gender = req.body.gender;
+    // console.log(req.body.image);
 
-    console.log(user);
+    // user.image = req.body.image || null;
+    console.log(
+      new Date(
+        `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
+      )
+    );
+    user.birthDate = req.body.birthDate
+      ? new Date(
+          `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
+        )
+      : user.birthDate;
+    user.gender = req.body.gender ? req.body.gender : user.gender;
+    user.username = req.body.username ? req.body.username : user.username;
+    user.email = req.body.email ? req.body.email : user.email;
+    user.bio = req.body.bio;
+
     await user.save();
+    console.log("-------------", user);
 
     res.status(200).json({
       status: "success",

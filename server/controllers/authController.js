@@ -172,15 +172,22 @@ export const changePassword = async (req, res, next) => {
     user.password = req.body.newPassword;
     user.confirmPassword = req.body.confirmPassword;
     await user.save();
+    user.password = undefined;
 
-    const newToken = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+    // const newToken = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+    // res.cookie("jwt", token, {
+    //   // expires: new Date(Date.now() + 30000),
+    //   maxAge: req.body.rememberMe ? 2592000000 : null,
+    //   httpOnly: true,
+    //   secure: true,
+    // });
 
     res.status(200).json({
       status: "success",
       data: {
         user,
       },
-      token: newToken,
+      // token: newToken,
     });
   } catch (err) {
     next(new Error(err));

@@ -1,5 +1,4 @@
 import Notification from "../models/notificationModel.js";
-import User from "../models/userModel.js";
 
 const getNotifications = async (req, res, next) => {
   try {
@@ -42,6 +41,7 @@ const sendFriendRequest = async (req, res, next) => {
       type: req?.body?.type || "Friend",
       sender: user._id,
       receiver: friend,
+      sentDate: Date.now(),
     });
 
     res.status(200).json({

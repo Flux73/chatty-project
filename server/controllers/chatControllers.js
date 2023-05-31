@@ -10,6 +10,7 @@ export const addMessage = async (req, res, next) => {
       message: req.body.message,
       sender: user._id,
       receiver: friend,
+      sentDate: Date.now(),
     });
 
     res.status(201).json({

@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     type: Date,
   },
 
+  bio: {
+    type: String,
+  },
+
   image: String,
 
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
@@ -47,6 +51,7 @@ const userSchema = new mongoose.Schema({
 
   socketId: String,
   isConnected: Boolean,
+  disconnectedAt: Date,
 });
 
 userSchema.pre("save", async function (next) {
@@ -56,18 +61,6 @@ userSchema.pre("save", async function (next) {
   this.password = hashedPassword;
   this.confirmPassword = undefined;
   return next();
-});
-
-// userSchema.post("findOneAndUpdate", async function () {
-//   console.log("Pass", this.password);
-//   const hashedPassword = await bcrypt.hash(this.password, 12);
-//   this.password = hashedPassword;
-//   next();
-// });
-
-userSchema.post(/^find/, function (next) {
-  // console.log(this);
-  // next();
 });
 
 const User = mongoose.model("User", userSchema);
