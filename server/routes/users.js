@@ -23,6 +23,12 @@ router
   .get(authController.protect, userController.me)
   .patch(authController.protect, userController.updateMe);
 
+router.patch(
+  "/updateMeSetup",
+  authController.protect,
+  userController.setUpUpdate
+);
+
 router.get("/:user", authController.protect, userController.getUser);
 router.get(
   "/search/:search",

@@ -1,14 +1,8 @@
 import express from "express";
-import chatControllers from "../controllers/chatControllers.js";
+import chatControllers from "../controllers/chatController.js";
 import authController from "../controllers/authController.js";
 
 const router = express.Router();
-
-router.get(
-  "/getUnseenMessages",
-  authController.protect,
-  chatControllers.getUnseenMessages
-);
 
 router
   .route("/:friend")
@@ -20,7 +14,5 @@ router.patch(
   authController.protect,
   chatControllers.updateIsSeenMessages
 );
-
-router.delete("/:id", authController.protect, chatControllers.deleteMessage);
 
 export default router;

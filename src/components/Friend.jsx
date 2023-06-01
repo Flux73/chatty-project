@@ -38,7 +38,7 @@ const Friend = ({ username, id, isConnected, disconnectedAt }) => {
         >
           <div className="mask mask-squircle">
             <Image
-              src="/imgs/profile.jpg"
+              src="/imgs/profile_pic.jpg"
               width={50}
               height={50}
               alt="Profile Picture"

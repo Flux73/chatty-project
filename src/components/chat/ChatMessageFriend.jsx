@@ -6,7 +6,7 @@ const ChatMessageFriend = ({ id, message, sentDate, isDeleted }) => {
     <div className="chat chat-start">
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img src="/imgs/profile.jpg" />
+          <img src="/imgs/profile_pic.jpg" />
         </div>
       </div>
       <div className="chat-header">

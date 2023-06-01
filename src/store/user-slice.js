@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {
     id: null,
-    picture: null,
     username: null,
     email: null,
     gender: null,
@@ -24,7 +23,8 @@ const userSlice = createSlice({
       state.user.id = action.payload.user._id;
     },
     updateUserInfo: (state, action) => {
-      state.user.picture = action.payload.user.picture;
+      localStorage.setItem("logged_in", JSON.stringify(true));
+
       state.user.gender = action.payload.user.gender;
       state.user.birthDate = action.payload.user.birthDate;
     },

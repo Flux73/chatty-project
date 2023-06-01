@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { RiNotification2Line } from "react-icons/ri";
+import { RiNotification2Line, RiSunLine } from "react-icons/ri";
 import FriendNotification from "./notifications/FriendNotification";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -170,7 +170,7 @@ const HomeNavBar = () => {
             <div tabindex="0" className="avatar">
               <div className=" mask mask-squircle cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
                 <Image
-                  src="/imgs/profile.jpg"
+                  src="/imgs/profile_pic.jpg"
                   width={96}
                   height={96}
                   alt="Profile Picture"

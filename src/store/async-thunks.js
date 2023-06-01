@@ -40,33 +40,26 @@ export const createUserAsync = (username, email, password, confirmPassword) => {
   };
 };
 
-export const updateUserAsync = (img, gender, birthDate) => {
+export const updateUserAsync = (gender, birthDate) => {
   return async (dispatch, getState) => {
     // const { appSlice } = getState();
     const fetchData = async () => {
       try {
         const user = await axios.patch(
-          "http://localhost:4000/api/v1/users/me",
+          "http://localhost:4000/api/v1/users/updateMeSetup",
           {
-            image: img,
             gender,
             birthDate,
           },
           {
-            headers: {
-              "Content-Type": "application/json",
-            },
             withCredentials: true,
           }
         );
-        console.log("WORKED");
-        console.log(user);
 
         dispatch(updateUserInfo({ user: user.data.user }));
-        dispatch(loginUser());
+        // dispatch(loginUser());
         dispatch(setServerError({ error: null }));
-        socket.emit("user-connected", { userId: user.data.data.user._id });
-
+        socket.emit("user-connected", { userId: user.data.user._id });
         // return Promise.resolve()
       } catch (err) {
         dispatch(setServerError({ error: err.response.data.message }));

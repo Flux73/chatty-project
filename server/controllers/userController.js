@@ -15,14 +15,6 @@ const updateMe = async (req, res, next) => {
   try {
     const user = req.user;
 
-    // console.log(req.body.image);
-
-    // user.image = req.body.image || null;
-    console.log(
-      new Date(
-        `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
-      )
-    );
     user.birthDate = req.body.birthDate
       ? new Date(
           `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
@@ -43,7 +35,31 @@ const updateMe = async (req, res, next) => {
   } catch (err) {
     res.status(400).json({
       status: "fail",
-      messgae: "failed to update",
+      message: "failed to update",
+    });
+  }
+};
+
+const setUpUpdate = async (req, res, next) => {
+  try {
+    const user = req.user;
+
+    console.log(user.birthDate);
+    user.birthDate = new Date(
+      `${req.body.birthDate.month} ${req.body.birthDate.day} ${req.body.birthDate.year}`
+    );
+    user.gender = req.body.gender;
+
+    await user.save();
+
+    res.status(200).json({
+      status: "success",
+      user,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: "failed to update",
     });
   }
 };
@@ -86,4 +102,4 @@ const getUser = async (req, res, next) => {
   }
 };
 
-export default { me, searchUsers, updateMe, getUser };
+export default { me, searchUsers, updateMe, getUser, setUpUpdate };

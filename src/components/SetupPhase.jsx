@@ -9,10 +9,6 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 const SetupPhase = ({ lang }) => {
-  const [imagePreview, setImagePreview] = useState(
-    "https://images.unsplash.com/photo-1682997843688-94722786a722?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-  );
-  const [img, setImg] = useState(null);
   const [gender, setGender] = useState(null);
   const [birthDate, setBirthDate] = useState({
     month: null,
@@ -50,18 +46,14 @@ const SetupPhase = ({ lang }) => {
             }))
         );
 
-        console.log("SENT");
         return;
       }
 
-      await dispatch(updateUserAsync(img, gender, birthDate));
-
-      console.log("good");
-      setLoading(false);
+      await dispatch(updateUserAsync(gender, birthDate));
       router.push("/en/home");
     } catch (err) {
       setLoading(false);
-      console.error(err);
+      console.log(err);
     }
   };
 
@@ -69,37 +61,9 @@ const SetupPhase = ({ lang }) => {
     <form
       onSubmit={editProfileHandler}
       className="form-control flex flex-col gap-6"
-      dir={lang === "ar" ? "rtl" : ""}
     >
-      {/* Image Field */}
-      <div className="flex gap-5">
-        <FormControl
-          labelTitle={lang === "ar" ? "صورة الحساب" : "Profile Picture"}
-          optionalLabel={lang === "ar" ? "اختياري" : "optional"}
-        >
-          <input
-            type="file"
-            className="file-input file-input-bordered w-full"
-            onChange={(e) => {
-              setImg(e.target.files[0]);
-              const reader = new FileReader();
-              reader.addEventListener("load", (e) => {
-                setImagePreview(e.target.result);
-              });
-              reader.readAsDataURL(e.target.files[0]);
-            }}
-            dir="ltr"
-          />
-        </FormControl>
-        <div className="avatar self-center">
-          <div className="w-24 rounded-full">
-            <img src={imagePreview} />
-          </div>
-        </div>
-      </div>
-
       {/* Gender Field */}
-      <FormControl labelTitle={lang === "ar" ? "الجنس" : "Gender"}>
+      <FormControl labelTitle="Gender">
         <div
           className={`${
             errors.gender ? "border-error" : "border-neutral"
@@ -107,13 +71,13 @@ const SetupPhase = ({ lang }) => {
         >
           <div className="px-14 flex flex-row justify-between">
             <GenderInput
-              title={lang === "ar" ? "ذكر" : "Male"}
+              title="Male"
               val="male"
               setGender={setGender}
               setError={setErrors}
             />
             <GenderInput
-              title={lang === "ar" ? "أنثى" : "Female"}
+              title="Female"
               val="female"
               setGender={setGender}
               setError={setErrors}
@@ -127,12 +91,10 @@ const SetupPhase = ({ lang }) => {
       </FormControl>
 
       {/* BirthDate Field */}
-      <FormControl
-        labelTitle={lang === "ar" ? "تاريخ الازدياد" : "Date of birth"}
-      >
+      <FormControl labelTitle="Date of birth">
         <div className="flex gap-3">
           <SelectOption
-            selectTitle={lang === "ar" ? "اليوم" : "Day"}
+            selectTitle="Day"
             options={days}
             setValue={setBirthDate}
             val="day"
@@ -140,7 +102,7 @@ const SetupPhase = ({ lang }) => {
             setError={setErrors}
           />
           <SelectOption
-            selectTitle={lang === "ar" ? "الشهر" : "Month"}
+            selectTitle="Month"
             options={months}
             setValue={setBirthDate}
             val="month"
@@ -148,7 +110,7 @@ const SetupPhase = ({ lang }) => {
             setError={setErrors}
           />
           <SelectOption
-            selectTitle={lang === "ar" ? "العام" : "Year"}
+            selectTitle="Year"
             options={years}
             setValue={setBirthDate}
             val="year"
@@ -162,7 +124,7 @@ const SetupPhase = ({ lang }) => {
         />
       </FormControl>
       <button className="btn btn-primary">
-        {!loading ? (lang === "ar" ? "تجهيز الحساب" : "Set Up") : "Loading..."}
+        {!loading ? "Set Up" : "Loading..."}
       </button>
     </form>
   );

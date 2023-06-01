@@ -2,8 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logoDark from "../../public/imgs/Asset 3.svg";
 import logoLight from "../../public/imgs/Asset 1.svg";
-import arabicPic from "../../public/imgs/arabic_pic.png";
-import englishPic from "../../public/imgs/english_pic.png";
+
 import { RiMenu2Line, RiMoonLine, RiSunLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme as setThemeState } from "@/store/theme-slice";
@@ -36,28 +35,7 @@ const NavBar = ({ lang, isSignup }) => {
             {isSignup ? "Log in" : "Sign up"}
           </Link>
         </li>
-        <li className="flex">
-          <div className="dropdown dropdown-end">
-            <label tabIndex="0" className="btn btn-ghost rounded-btn">
-              <Image
-                src={lang === "ar" ? arabicPic : englishPic}
-                alt="Language Flag"
-                width={25}
-                height={25}
-              />
-            </label>
-            <ul
-              tabIndex="0"
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <Link href={`../${lang === "en" ? "ar" : "en"}/signup`}>
-                  {lang === "ar" ? "English" : "العربية"}
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
+
         <li className="hidden sm:flex justify-center items-center">
           <label className="swap swap-rotate">
             <input

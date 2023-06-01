@@ -15,9 +15,13 @@ export const signup = async (req, res, next) => {
 
     user.password = undefined;
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+    const token = jwt.sign(
+      { _id: user._id },
+      "i-am-the-one-that-will-becoming-"
+    );
 
     res.cookie("jwt", token, {
+      maxAge: 2592000000,
       httpOnly: true,
       secure: true,
     });
@@ -41,11 +45,14 @@ export const login = async (req, res, next) => {
     if (!(await bcrypt.compare(req.body.password, user.password)))
       return next(new Error("Email Or Password is Invalid"));
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
+    const token = jwt.sign(
+      { _id: user._id },
+      "i-am-the-one-that-will-becoming-"
+    );
 
     res.cookie("jwt", token, {
       // expires: new Date(Date.now() + 30000),
-      maxAge: req.body.rememberMe ? 2592000000 : null,
+      maxAge: 2592000000,
       httpOnly: true,
       secure: true,
     });
@@ -97,7 +104,7 @@ export const protect = async (req, res, next) => {
 
     const decoded = await promisify(jwt.verify)(
       token,
-      process.env.JWT_PRIVATE_KEY
+      "i-am-the-one-that-will-becoming-"
     );
 
     const user = await User.findById(decoded._id).select("+password");
@@ -123,9 +130,13 @@ export const forgetPassword = async (req, res, next) => {
     return;
   }
 
-  const token = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { _id: user._id },
+    "i-am-the-one-that-will-becoming-",
+    {
+      expiresIn: "1h",
+    }
+  );
 
   const text = `This is your token for resetting your password \n
   "http://localhost:3000/api/v1/users/resetPassword/${token}" \n
@@ -148,7 +159,7 @@ export const resetPassword = async (req, res, next) => {
     return;
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+  const decoded = jwt.verify(token, "i-am-the-one-that-will-becoming-");
 
   const user = await User.findById(decoded._id);
   user.password = req.body.newPassword;
@@ -173,14 +184,6 @@ export const changePassword = async (req, res, next) => {
     user.confirmPassword = req.body.confirmPassword;
     await user.save();
     user.password = undefined;
-
-    // const newToken = jwt.sign({ _id: user._id }, process.env.JWT_PRIVATE_KEY);
-    // res.cookie("jwt", token, {
-    //   // expires: new Date(Date.now() + 30000),
-    //   maxAge: req.body.rememberMe ? 2592000000 : null,
-    //   httpOnly: true,
-    //   secure: true,
-    // });
 
     res.status(200).json({
       status: "success",

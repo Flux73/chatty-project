@@ -78,7 +78,7 @@ const SearchFriends = () => {
                     <div className={`avatar z-0`}>
                       <div className="mask mask-squircle">
                         <Image
-                          src="/imgs/profile.jpg"
+                          src="/imgs/profile_pic.jpg"
                           width={50}
                           height={50}
                           alt="Profile Picture"

@@ -3,7 +3,6 @@ import themeReducer from "./theme-slice";
 import languageReducer from "./language-slice";
 import userReducer from "./user-slice";
 import notificationReducer from "./notification-slice";
-import chatReducer from "./chat-slice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +10,6 @@ const store = configureStore({
     language: languageReducer,
     user: userReducer,
     notification: notificationReducer,
-    chat: chatReducer,
   },
 });
 

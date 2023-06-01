@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import app from "./app.js";
-import handleEvents from "./controllers/chatController.js";
+import handleEvents from "./controllers/socketController.js";
 
 dotenv.config();
 // DlmUFlapkAGeR7vn
@@ -14,13 +14,10 @@ io.on("connection", (socket) => {
   handleEvents(socket, io);
 });
 
-const DB = process.env.DATABASE.replace(
-  "<password>",
-  process.env.DATABASE_PASSWORD
-);
-
 mongoose
-  .connect(DB)
+  .connect(
+    "mongodb+srv://salah:eGf1tQ77i3B27Yct@cluster0.3cug0e7.mongodb.net/chatty?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("DB connected successfully");
   })
@@ -28,7 +25,7 @@ mongoose
     console.log(err);
   });
 
-const port = process.env.PORT || 4000;
+const port = 4000;
 server.listen(port, () => {
   console.log("Server is running on port" + " " + port);
 });

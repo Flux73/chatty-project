@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import HomeNavBar from "@/components/HomeNavBar";
-import MobileNav from "@/components/MobileNav";
 import useFetchMe from "@/hooks/useFetchMe";
 import Image from "next/image";
 import { useSelector } from "react-redux";
@@ -116,7 +115,7 @@ const Page = () => {
             <header className="flex gap-4 flex-wrap">
               <div class="avatar">
                 <div class="mask mask-squircle">
-                  <Image src="/imgs/profile.jpg" width={100} height={100} />
+                  <Image src="/imgs/profile_pic.jpg" width={100} height={100} />
                 </div>
               </div>
               <div className="flex flex-col gap-3 mr-auto">
@@ -138,18 +137,10 @@ const Page = () => {
               </div>
               {router.query.id !== "me" ? (
                 isFriend === true ? (
-                  <div className="basis-full sm:basis-auto dropdown dropdown-end h-auto">
+                  <div className="basis-full sm:basis-auto ">
                     <button className="btn btn-primary btn-block">
                       Friend Added
                     </button>
-                    <ul
-                      tabindex="0"
-                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                      <li>
-                        <button>Remove Friend</button>
-                      </li>
-                    </ul>
                   </div>
                 ) : Object.keys(isFriendPending).length === 0 ? (
                   <form

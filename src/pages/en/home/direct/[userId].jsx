@@ -1,7 +1,6 @@
 import ChatMessageFriend from "@/components/chat/ChatMessageFriend";
 import ChatMessageUser from "@/components/chat/ChatMessageUser";
 import useFetchMe from "@/hooks/useFetchMe";
-import { deleteUnseenMessages } from "@/store/chat-slice";
 import { setRouterPage } from "@/store/user-slice";
 import formatDate from "@/util/formatDate";
 import socket from "@/util/socket";
@@ -9,7 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -32,7 +31,6 @@ const Page = () => {
   useEffect(() => {
     if (!router.isReady) return;
     // dispatch(setCurrentPageRoute(router.route));
-    dispatch(deleteUnseenMessages());
     socket.emit("message-seen", router.query.userId);
     // socket.emit("");
   }, [router.isReady]);
@@ -51,7 +49,6 @@ const Page = () => {
     });
     socket.on("get-message", async (data) => {
       setChat((prev) => [...prev, data]);
-      dispatch(deleteUnseenMessages());
       await axios.patch(
         `http://localhost:4000/api/v1/chats/updateIsSeen/${router.query.userId}`,
         {},
@@ -166,7 +163,7 @@ const Page = () => {
             >
               <div className="mask mask-squircle">
                 <Image
-                  src="/imgs/profile.jpg"
+                  src="/imgs/profile_pic.jpg"
                   width={50}
                   height={50}
                   alt="Profile Picture"

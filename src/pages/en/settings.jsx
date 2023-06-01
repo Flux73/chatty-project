@@ -86,9 +86,9 @@ const profile = () => {
   console.log(user);
 
   return (
-    <div className="h-screen flex flex-col gap-5">
+    <div className="h-screen flex flex-col">
       <HomeNavBar></HomeNavBar>
-      <main className="px-7 grow overflow-auto py-2">
+      <main className="px-7 grow overflow-y-scroll py-2">
         <div className="max-w-2xl mr-auto ml-auto">
           <div className="mb-7 flex items-center">
             <h1 className="text-2xl font-semibold mr-auto">Edit Profile</h1>

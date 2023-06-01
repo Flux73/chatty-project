@@ -134,23 +134,6 @@ const Login = ({ lang }) => {
                   </span>
                 </label>
               ) : null}
-              <label className="label">
-                <span className="label-text">
-                  <div className="form-control">
-                    <label className="label cursor-pointer gap-2">
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-secondary"
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                      />
-                      <span className="label-text">Remember me</span>
-                    </label>
-                  </div>
-                </span>
-                <span className="label-text link-hover link link-secondary">
-                  <Link href="/en/forgotPassword">Forgot password?</Link>
-                </span>
-              </label>
             </FormControl>
             <button className="btn btn-primary">
               {!loading
